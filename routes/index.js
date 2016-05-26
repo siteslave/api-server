@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var Person = require('../models/person');
+var Home = require('../models/home');
 
 /*
 POST, GET, PUT, PATCH, DELETE, ....
@@ -18,6 +19,15 @@ router.get('/', function(req, res, next) {
 // GET
 router.get('/person', function (req, res, next) {
   Person.getList(req.db)
+    .then(rows => {
+      res.send({ok: true, rows: rows})
+    }, err => {
+      res.send({ok: false, msg: err})
+    });
+});
+
+router.get('/home', function (req, res, next) {
+  Home.getList(req.db)
     .then(rows => {
       res.send({ok: true, rows: rows})
     }, err => {
