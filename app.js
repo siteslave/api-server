@@ -9,6 +9,7 @@ var cors = require('cors');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var anc = require('./routes/anc');
 
 var app = express();
 
@@ -54,8 +55,9 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', routes); // http://localhost:3000/about
-
 app.use('/users', users); // http://localhost:3000/users/list
+app.use('/anc', anc); //   /anc
+// app.use('/api', api); /api/anc/list, /api/home/list
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
