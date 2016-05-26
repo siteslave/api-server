@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var cors = require('cors');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -21,6 +23,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cors());
+
+/*
+host: hdc.kkh.go.th
+user: satit
+password: 123456
+database: wirote
+*/
+var db = require('knex')({
+  client: 'mysql',
+  connection: {
+    host: 'hdc.kkh.go.th',
+    database: 'wirote',
+    port: 3306,
+    user: 'satit',
+    password: '123456'
+  }
+});
+
+app.use(function (req, res, next) {
+  req.db = db;
+  next();
+});
+
+app.use(function (req, res, next) {
+  console.log('Hello Express');
+  next();
+});
 
 app.use('/', routes); // http://localhost:3000/about
 

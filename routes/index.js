@@ -1,5 +1,8 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
+var Person = require('../models/person');
 
 /*
 POST, GET, PUT, PATCH, DELETE, ....
@@ -14,7 +17,12 @@ router.get('/', function(req, res, next) {
 
 // GET
 router.get('/person', function (req, res, next) {
-  res.send({ ok: true, person: [{pid: 1111, name: 'xxxxx'}]})
+  Person.getList(req.db)
+    .then(rows => {
+      res.send({ok: true, rows: rows})
+    }, err => {
+      res.send({ok: false, msg: err})
+    });
 });
 
 router.post('/person', function (req, res, next) {
