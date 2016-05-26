@@ -41,6 +41,10 @@ var db = require('knex')({
     port: 3306,
     user: 'satit',
     password: '123456'
+  },
+  pool: {
+    min: 10,
+    max: 200
   }
 });
 
